@@ -19,22 +19,6 @@ nós aleatoriamente conectávamos um dos vizinhos.
 
 ## Screenshots
 
-<div align="center">
-  <img src= "./images/image1.png"/>
-</div>
-
-<div align="center">
-  <img src= "./images/image2.png"/>
-</div>
-
-<div align="center">
-  <img src= "./images/image3.png"/>
-</div>
-
-<div align="center">
-  <img src= "./images/image4.png"/>
-</div>
-
 ## Instalação
 
 **Linguagem**: python3 <br>
