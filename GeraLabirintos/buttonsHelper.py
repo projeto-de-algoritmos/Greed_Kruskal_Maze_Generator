@@ -14,7 +14,7 @@ def buttons_on_click(x: int, y: int) -> None:
                 screen.fill(LIGHTBLUE)
                 board.draw_grid(screen)
                 if(buttons[i].color == PRIM_COLOR):
-                        board.maze_prim(1, 1, screen)
+                        board.maze_kruskal(screen)
 
 def draw_buttons() -> None:
     """draw the buttons on the screen"""

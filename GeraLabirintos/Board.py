@@ -98,3 +98,92 @@ class Board():
                                 vetY.append(newY)
                                 vetNX.append(self.dx[i])
                                 vetNY.append(self.dy[i])
+
+    def maze_kruskal(self, screen: Surface) -> None:
+        """draw maze in the screen based on kruskal's algorithm
+
+                Parameters:
+                        screen (Surface): game screen
+
+                Returns:
+                        None
+        """
+        
+        # x1 and y1 its the main coordinates, x2 and y2 are their edge neighboors
+        x1 = []
+        y1 = []
+        x2 = []
+        y2 = []
+
+        for x in range(0, self.horizontal):
+                for y in range(0, self.vertical):
+                        for i in range(0, 4):
+                                newX = x+self.dx[i]
+                                newY = y+self.dy[i]
+                                if not (self.out_of_range(newX, newY)):
+                                        x1.append(x)
+                                        y1.append(y)
+                                        x2.append(newX)
+                                        y2.append(newY)
+
+        check =  [[0 for i in range(self.vertical)] for j in range(self.horizontal)]
+        
+        while x1:
+
+                n = randint(0, len(x1) - 1)
+                sx1 = x1[n]
+                sx2 = x2[n]
+                sy1 = y1[n]
+                sy2 = y2[n]
+
+
+                
+                if (check[sx1][sy1] + check[sx2][sy2]) == 0:
+                        key = randint(1, 9000000)
+                        check[sx1][sy1] = key
+                        check[sx2][sy2] = key
+                        self.draw_neighbor(screen, sx1, sx2, sy1, sy2)
+                        self.pop4(x1, x2, y1, y2, n)
+                        continue
+
+                if check[sx1][sy1] == check[sx2][sy2]:
+                        self.pop4(x1, x2, y1, y2, n)
+                        continue
+
+                if check[sx1][sy1] == 0:
+                        check[sx1][sy1] = check[sx2][sy2]
+                        self.draw_neighbor(screen, sx1, sx2, sy1, sy2)
+                        self.pop4(x1, x2, y1, y2, n)
+                        continue
+
+                if check[sx2][sy2] == 0:
+                        check[sx2][sy2] = check[sx1][sy1]
+                        self.draw_neighbor(screen, sx1, sx2, sy1, sy2)
+                        self.pop4(x1, x2, y1, y2, n)
+                        continue
+
+                target = check[sx1][sy1]
+                for x in range(0, self.horizontal):
+                        for y in range(0, self.vertical):
+                                if check[x][y] == target:
+                                        check[x][y] = check[sx2][sy2]
+                self.draw_neighbor(screen, sx1, sx2, sy1, sy2)
+                self.pop4(x1, x2, y1, y2, n)
+
+
+
+    def draw_neighbor (self, screen, sx1, sx2, sy1, sy2) -> None:
+
+        posX = (self.margin + self.width) * (sy2) + self.margin
+        posY = (self.margin + self.height) * (sx2) + self.margin
+        draw.rect(screen, WALL, (posX, posY, 13, 13))
+
+        posX = (self.margin + self.width) * (sy2 + (sy1 - sy2)/2) + self.margin
+        posY = (self.margin + self.height) * (sx2 + (sx1 - sx2)/2) + self.margin
+        draw.rect(screen, WALL, (posX, posY, 13, 13))
+    
+    def pop4(self, x1, x2, y1, y2, n) -> None:
+        x1.pop(n)
+        y1.pop(n)
+        x2.pop(n)
+        y2.pop(n)
