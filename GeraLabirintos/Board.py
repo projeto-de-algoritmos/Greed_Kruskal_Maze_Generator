@@ -1,4 +1,4 @@
-from pygame import draw, Surface
+from pygame import draw, Surface, display
 from colors import BLACK, WALL
 from random import randint
 
@@ -183,10 +183,12 @@ class Board():
         posX = (self.margin + self.width) * (sy2) + self.margin
         posY = (self.margin + self.height) * (sx2) + self.margin
         draw.rect(screen, WALL, (posX, posY, 13, 13))
+        display.flip()
 
         posX = (self.margin + self.width) * (sy2 + (sy1 - sy2)/2) + self.margin
         posY = (self.margin + self.height) * (sx2 + (sx1 - sx2)/2) + self.margin
         draw.rect(screen, WALL, (posX, posY, 13, 13))
+        display.flip()
     
     def pop4(self, x1, x2, y1, y2, n) -> None:
         """pop all coordinates
